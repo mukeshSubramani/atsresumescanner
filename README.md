@@ -25,6 +25,13 @@ docker-compose up --build
 ```
 Frontend at http://localhost:5173, backend at http://localhost:8080.
 
+### H2 in-memory profile (local only)
+```bash
+cd backend
+SPRING_PROFILES_ACTIVE=h2 ./mvnw spring-boot:run
+```
+- H2 console: http://localhost:8080/h2-console (JDBC URL: `jdbc:h2:mem:atsdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE`, user `sa`, empty password)
+
 ## Env vars
 - DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
 - JWT_SECRET
