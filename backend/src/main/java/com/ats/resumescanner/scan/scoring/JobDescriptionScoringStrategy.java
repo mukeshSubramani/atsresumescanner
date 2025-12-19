@@ -23,6 +23,7 @@ public class JobDescriptionScoringStrategy implements ScoringStrategy {
 
     private static final Pattern YEARS_PATTERN = Pattern.compile("(\\d{1,2})\\+?\\s*(years|yrs)", Pattern.CASE_INSENSITIVE);
     private static final List<String> SECTION_KEYWORDS = List.of("summary", "skills", "experience", "education", "projects", "certifications");
+    private static final double DEFAULT_SKILLS_SCORE = 50.0;
 
     @Override
     public ScanResult score(ScoringContext context) {
@@ -35,7 +36,7 @@ public class JobDescriptionScoringStrategy implements ScoringStrategy {
         List<String> matchedSkills = TextSimilarity.matchedTokens(resumeText, jdSkills);
         List<String> missingSkills = new ArrayList<>(jdSkills);
         missingSkills.removeAll(matchedSkills);
-        double skillsScore = jdSkills.isEmpty() ? 50.0 : Math.min(100.0, ((double) matchedSkills.size() / jdSkills.size()) * 100);
+        double skillsScore = jdSkills.isEmpty() ? DEFAULT_SKILLS_SCORE : Math.min(100.0, ((double) matchedSkills.size() / jdSkills.size()) * 100);
 
         double experienceScore = computeExperienceScore(resumeText, jdText);
         double formattingScore = computeFormattingScore(resumeText);
