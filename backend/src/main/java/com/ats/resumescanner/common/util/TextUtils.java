@@ -29,6 +29,6 @@ public final class TextUtils {
         List<String> filtered = Arrays.stream(cleaned.split(" "))
                 .filter(word -> !STOP_WORDS.contains(word))
                 .toList();
-        return filtered.stream().collect(Collectors.joining(" "));
+        return String.join(" ", filtered);
     }
 }

@@ -38,7 +38,7 @@ public class ResumeStorageService {
     public void delete(String filePath) {
         if (filePath == null) return;
         try {
-            FileSystemUtils.deleteRecursively(Path.of(filePath));
+            Files.deleteIfExists(Path.of(filePath));
         } catch (IOException ignored) {
         }
     }

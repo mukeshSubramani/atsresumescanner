@@ -1,6 +1,7 @@
 package com.ats.resumescanner.scan.scoring;
 
 import com.ats.resumescanner.common.config.AppProperties;
+import com.ats.resumescanner.scan.JobDescription;
 import com.ats.resumescanner.scan.SuggestionSeverity;
 import com.ats.resumescanner.scan.model.KeywordCoverage;
 import com.ats.resumescanner.scan.model.ScanResult;
@@ -30,10 +31,11 @@ public class JobDescriptionScoringStrategy implements ScoringStrategy {
 
         double keywordScore = TextSimilarity.keywordScore(resumeText, jdText) * 100;
 
-        List<String> matchedSkills = TextSimilarity.matchedTokens(resumeText, skillDictionary.allSkills());
-        List<String> missingSkills = new ArrayList<>(skillDictionary.allSkills());
+        List<String> jdSkills = TextSimilarity.matchedTokens(jdText, skillDictionary.allSkills());
+        List<String> matchedSkills = TextSimilarity.matchedTokens(resumeText, jdSkills);
+        List<String> missingSkills = new ArrayList<>(jdSkills);
         missingSkills.removeAll(matchedSkills);
-        double skillsScore = Math.min(100.0, ((double) matchedSkills.size() / (matchedSkills.size() + missingSkills.size() + 1e-6)) * 100);
+        double skillsScore = jdSkills.isEmpty() ? 50.0 : Math.min(100.0, ((double) matchedSkills.size() / jdSkills.size()) * 100);
 
         double experienceScore = computeExperienceScore(resumeText, jdText);
         double formattingScore = computeFormattingScore(resumeText);

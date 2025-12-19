@@ -18,7 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class LocalDatasetProvider implements MarketDatasetProvider {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     private List<MarketRoleTemplate> templates = List.of();
     private Map<String, List<String>> datasets = Map.of();
