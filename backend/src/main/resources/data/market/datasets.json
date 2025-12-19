@@ -1,0 +1,19 @@
+{
+  "java-senior-uk::UK": [
+    "We seek a Senior Java Developer with 8+ years building microservices using Java 17/21, Spring Boot, REST APIs, Kafka, PostgreSQL. Experience with AWS (ECS, S3, RDS), Docker/Kubernetes, CI/CD pipelines, Terraform is preferred. Strong understanding of distributed systems, testing (JUnit/Mockito), and observability.",
+    "Fintech firm looking for Senior Backend Engineer with Java, Spring, Hibernate/JPA, PostgreSQL, Redis, event-driven architecture (Kafka), API security (OAuth2/JWT). Cloud experience (AWS or GCP), containerization and GitOps. Champion code quality, clean architecture, mentoring juniors.",
+    "Enterprise platform team needs Senior Java Engineer skilled in Java 21, Spring Boot, Gradle/Maven, GraphQL/REST, Kubernetes, Helm, Prometheus/Grafana. Experience with caching, resilience patterns, and performance tuning."
+  ],
+  "java-mid-uk::UK": [
+    "Mid-level Java Developer with 3-5 years experience, Spring Boot, REST APIs, PostgreSQL, Docker, AWS basics, unit/integration testing. Comfortable with Agile and code reviews.",
+    "Backend engineer with Java 17, Spring Data JPA, messaging (Kafka/RabbitMQ nice), CI/CD pipelines, Kubernetes exposure preferred."
+  ],
+  "frontend-senior-uk::UK": [
+    "Senior Frontend Engineer with React 18, TypeScript, Vite, testing (Jest/RTL/Cypress), state management, accessibility, performance optimization. Experience with design systems (MUI), Tailwind, CI/CD, and collaboration with designers.",
+    "Product-led team seeking UI engineer strong in React, TypeScript, Next.js/Vite, data viz (Recharts/D3), API integration, authentication flows, security best practices."
+  ],
+  "devops-senior-uk::UK": [
+    "DevOps Engineer with Kubernetes, Helm, Terraform, AWS, observability (Prometheus/Grafana), CI/CD (GitHub Actions/Jenkins), security scanning, networking fundamentals.",
+    "Platform engineer experienced in Docker, k8s, service mesh, logging (ELK/EFK), secrets management, SRE principles, incident response."
+  ]
+}
