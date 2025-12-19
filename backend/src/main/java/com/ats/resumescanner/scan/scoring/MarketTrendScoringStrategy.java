@@ -43,7 +43,6 @@ public class MarketTrendScoringStrategy implements ScoringStrategy {
         );
 
         double overallScore = (keywordScore * 0.4) + (skillsScore * 0.35) + (experienceScore * 0.15) + (formattingScore * 0.1);
-        overallScore /= 1.0;
 
         return ScanResult.builder()
                 .overallScore(round(overallScore))

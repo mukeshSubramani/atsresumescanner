@@ -1,18 +1,21 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import api from './client';
-
-type AuthResponse = { token: string; role: string };
+import type { AuthResponse, ResumeResponse, ScanResponse, MarketRoleTemplate } from './types';
 
 export const useLogin = () =>
-  useMutation<AuthResponse, Error, { email: string; password: string }>(async (body) => {
-    const { data } = await api.post('/api/auth/login', body);
-    return data;
+  useMutation({
+    mutationFn: async (body: { email: string; password: string }) => {
+      const { data } = await api.post('/api/auth/login', body);
+      return data as AuthResponse;
+    },
   });
 
 export const useRegister = () =>
-  useMutation<AuthResponse, Error, { email: string; password: string }>(async (body) => {
-    const { data } = await api.post('/api/auth/register', body);
-    return data;
+  useMutation({
+    mutationFn: async (body: { email: string; password: string }) => {
+      const { data } = await api.post('/api/auth/register', body);
+      return data as AuthResponse;
+    },
   });
 
 export const useMe = () =>
@@ -30,18 +33,20 @@ export const useResumes = () =>
     queryKey: ['resumes'],
     queryFn: async () => {
       const { data } = await api.get('/api/resumes');
-      return data as any[];
+      return data as ResumeResponse[];
     },
   });
 
 export const useUploadResume = () =>
-  useMutation(async (file: File) => {
-    const form = new FormData();
-    form.append('file', file);
-    const { data } = await api.post('/api/resumes/upload', form, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return data;
+  useMutation({
+    mutationFn: async (file: File) => {
+      const form = new FormData();
+      form.append('file', file);
+      const { data } = await api.post('/api/resumes/upload', form, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      return data as ResumeResponse;
+    },
   });
 
 export const useScans = () =>
@@ -49,7 +54,7 @@ export const useScans = () =>
     queryKey: ['scans'],
     queryFn: async () => {
       const { data } = await api.get('/api/scans');
-      return data as any[];
+      return data as ScanResponse[];
     },
   });
 
@@ -69,18 +74,22 @@ export const useMarketRoles = () =>
     queryKey: ['market-roles'],
     queryFn: async () => {
       const { data } = await api.get('/api/market/roles');
-      return data as any[];
+      return data as MarketRoleTemplate[];
     },
   });
 
 export const useJdScan = () =>
-  useMutation(async (body: { resumeId: number; jdText: string; title?: string; company?: string; location?: string }) => {
-    const { data } = await api.post('/api/scans/jd-match', body);
-    return data;
+  useMutation({
+    mutationFn: async (body: { resumeId: number; jdText: string; title?: string; company?: string; location?: string }) => {
+      const { data } = await api.post('/api/scans/jd-match', body);
+      return data as ScanResponse;
+    },
   });
 
 export const useMarketScan = () =>
-  useMutation(async (body: { resumeId: number; roleKey: string; location?: string }) => {
-    const { data } = await api.post('/api/scans/market-trend', body);
-    return data;
+  useMutation({
+    mutationFn: async (body: { resumeId: number; roleKey: string; location?: string }) => {
+      const { data } = await api.post('/api/scans/market-trend', body);
+      return data as ScanResponse;
+    },
   });

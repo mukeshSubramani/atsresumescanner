@@ -1,7 +1,8 @@
 import { useUploadResume } from '../api/hooks';
 import { useState } from 'react';
+import type { ResumeResponse } from '../api/types';
 
-export default function ResumeUploader({ onUploaded }: { onUploaded: (resume: any) => void }) {
+export default function ResumeUploader({ onUploaded }: { onUploaded: (resume: ResumeResponse) => void }) {
   const [file, setFile] = useState<File | null>(null);
   const mutation = useUploadResume();
 

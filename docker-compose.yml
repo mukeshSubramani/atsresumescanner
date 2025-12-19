@@ -25,11 +25,12 @@ services:
       - "8080:8080"
   frontend:
     build: ./frontend
-    environment:
-      VITE_API_URL: http://localhost:8080
     ports:
       - "5173:80"
     depends_on:
       - backend
+    # Note: Frontend uses relative API path (/api) by default.
+    # In production, configure a reverse proxy (nginx/traefik) to route
+    # /api requests to the backend service.
 volumes:
   db_data:

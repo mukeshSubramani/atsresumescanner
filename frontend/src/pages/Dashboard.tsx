@@ -21,9 +21,9 @@ export default function Dashboard() {
           <div className="card">
             <div className="font-semibold mb-2">Recent Scans</div>
             <div className="space-y-2 text-sm">
-              {scans?.map((s: any) => (
-                <Link key={s.id} to={`/results/${s.id}`} className="block p-2 rounded bg-slate-800 hover:bg-slate-700">
-                  {s.scanType} — Score {Math.round(s.result.overallScore)}
+              {scans?.map((scan) => (
+                <Link key={scan.id} to={`/results/${scan.id}`} className="block p-2 rounded bg-slate-800 hover:bg-slate-700">
+                  {scan.scanType} — Score {Math.round(scan.result.overallScore)}
                 </Link>
               ))}
               {!scans?.length && <div className="text-slate-500">No scans yet</div>}
@@ -33,9 +33,9 @@ export default function Dashboard() {
         <div className="card">
           <div className="font-semibold mb-2">My Resumes</div>
           <div className="space-y-2 text-sm">
-            {resumes?.map((r: any) => (
-              <div key={r.id} className="p-2 rounded bg-slate-800">
-                {r.name} — {r.fileType}
+            {resumes?.map((resume) => (
+              <div key={resume.id} className="p-2 rounded bg-slate-800">
+                {resume.name} — {resume.fileType}
               </div>
             ))}
             {!resumes?.length && <div className="text-slate-500">No resumes uploaded</div>}

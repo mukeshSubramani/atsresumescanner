@@ -14,9 +14,9 @@ export default function MarketSelector({ onSelect }: Props) {
         className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
       >
         <option value="">Select role</option>
-        {roles?.map((r: any) => (
-          <option key={r.key} value={r.key}>
-            {r.title} ({r.seniority}) - {r.location}
+        {roles?.map((role) => (
+          <option key={role.key} value={role.key}>
+            {role.title} ({role.seniority}) - {role.location}
           </option>
         ))}
       </select>

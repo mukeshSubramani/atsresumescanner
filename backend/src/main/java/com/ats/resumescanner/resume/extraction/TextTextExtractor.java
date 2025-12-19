@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class TextTextExtractor implements TextExtractor {
     @Override
     public boolean supports(String contentType, String extension) {
-        return contentType != null && contentType.startsWith("text/") || "txt".equalsIgnoreCase(extension);
+        return (contentType != null && contentType.startsWith("text/")) || "txt".equalsIgnoreCase(extension);
     }
 
     @Override

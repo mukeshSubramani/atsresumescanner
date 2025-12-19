@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
-const schema = z.object({ email: z.string().email(), password: z.string().min(6) });
+const schema = z.object({ email: z.string().email(), password: z.string().min(8) });
 
 type FormData = z.infer<typeof schema>;
 
@@ -17,7 +17,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   const onSubmit = async (values: FormData) => {
-    const res = await mutation.mutateAsync(values);
+    const res = await mutation.mutateAsync({ email: values.email, password: values.password });
     setAuth(res.token, res.role);
     navigate('/dashboard');
   };
