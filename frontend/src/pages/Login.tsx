@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
-const schema = z.object({ email: z.string().email(), password: z.string().min(6) });
+const schema = z.object({ email: z.string().email(), password: z.string().min(8) });
 
 type FormData = z.infer<typeof schema>;
 

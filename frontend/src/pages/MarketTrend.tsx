@@ -27,8 +27,8 @@ export default function MarketTrend() {
           <div className="text-sm text-slate-400">Select Resume</div>
           <select value={resumeId} onChange={(e) => setResumeId(e.target.value)} className="w-full bg-slate-800 px-3 py-2 rounded">
             <option value="">Choose resume</option>
-            {resumes?.map((r: any) => (
-              <option key={r.id} value={r.id}>{r.name}</option>
+            {resumes?.map((resume) => (
+              <option key={resume.id} value={resume.id}>{resume.name}</option>
             ))}
           </select>
           <button onClick={submit} className="px-4 py-2 rounded bg-cyan-500 text-slate-900 font-semibold">

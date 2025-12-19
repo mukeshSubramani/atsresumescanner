@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import api from './client';
-
-type AuthResponse = { token: string; role: string };
+import type { AuthResponse, ResumeResponse, ScanResponse, MarketRoleTemplate } from './types';
 
 export const useLogin = () =>
   useMutation<AuthResponse, Error, { email: string; password: string }>(async (body) => {
@@ -30,7 +29,7 @@ export const useResumes = () =>
     queryKey: ['resumes'],
     queryFn: async () => {
       const { data } = await api.get('/api/resumes');
-      return data as any[];
+      return data as ResumeResponse[];
     },
   });
 
@@ -49,7 +48,7 @@ export const useScans = () =>
     queryKey: ['scans'],
     queryFn: async () => {
       const { data } = await api.get('/api/scans');
-      return data as any[];
+      return data as ScanResponse[];
     },
   });
 
@@ -69,7 +68,7 @@ export const useMarketRoles = () =>
     queryKey: ['market-roles'],
     queryFn: async () => {
       const { data } = await api.get('/api/market/roles');
-      return data as any[];
+      return data as MarketRoleTemplate[];
     },
   });
 
