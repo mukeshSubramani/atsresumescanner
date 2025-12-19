@@ -17,7 +17,7 @@ export default function Signup() {
   const navigate = useNavigate();
 
   const onSubmit = async (values: FormData) => {
-    const res = await mutation.mutateAsync(values);
+    const res = await mutation.mutateAsync({ email: values.email, password: values.password });
     setAuth(res.token, res.role);
     navigate('/dashboard');
   };

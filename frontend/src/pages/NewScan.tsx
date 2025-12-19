@@ -32,10 +32,12 @@ export default function NewScan() {
     const resumeId = Number(values.resumeId);
     if (!resumeId) return;
     if (mode === 'jd') {
-      const res = await jdScan.mutateAsync({ resumeId, jdText: values.jdText, title: values.title, company: values.company, location: values.location });
+      const jdValues = values as JdFormValues;
+      const res = await jdScan.mutateAsync({ resumeId, jdText: jdValues.jdText, title: jdValues.title, company: jdValues.company, location: jdValues.location });
       navigate(`/results/${res.id}`);
     } else {
-      const res = await marketScan.mutateAsync({ resumeId, roleKey: values.roleKey, location: values.location });
+      const marketValues = values as MarketFormValues;
+      const res = await marketScan.mutateAsync({ resumeId, roleKey: marketValues.roleKey, location: marketValues.location });
       navigate(`/results/${res.id}`);
     }
   };
