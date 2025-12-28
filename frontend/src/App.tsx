@@ -34,8 +34,9 @@ function App() {
     try {
       const scanResult = await scanResume(resumeFile, resumeText, jobDescription)
       setResult(scanResult)
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while scanning the resume')
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred while scanning the resume'
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

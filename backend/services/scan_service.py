@@ -4,6 +4,8 @@ Scan service - orchestrates resume scanning logic
 from fastapi import UploadFile, HTTPException
 from typing import Optional, Dict, Any
 import logging
+import re
+import string
 
 from extractors.text_extractor import TextExtractor
 from services.keyword_service import KeywordService
@@ -45,6 +47,10 @@ class ScanService:
         else:
             raise HTTPException(status_code=400, detail="No resume provided")
         
+        # Validate resume content is not empty
+        if not resume_content or not resume_content.strip():
+            raise HTTPException(status_code=400, detail="Resume content is empty")
+        
         # Normalize texts
         resume_normalized = self._normalize_text(resume_content)
         jd_normalized = self._normalize_text(job_description_text)
@@ -76,16 +82,23 @@ class ScanService:
     
     async def _extract_from_file(self, file: UploadFile) -> str:
         """Extract text from uploaded file"""
+        # Validate filename exists
+        if not file.filename:
+            raise HTTPException(status_code=400, detail="File must have a filename")
+        
         # Validate file size (5MB max)
         content = await file.read()
         if len(content) > 5 * 1024 * 1024:
             raise HTTPException(status_code=400, detail="File size exceeds 5MB limit")
         
+        if len(content) == 0:
+            raise HTTPException(status_code=400, detail="Uploaded file is empty")
+        
         # Reset file pointer
         await file.seek(0)
         
         # Extract text based on file type
-        file_extension = file.filename.lower().split('.')[-1] if file.filename else ''
+        file_extension = file.filename.lower().split('.')[-1]
         
         if file_extension == 'pdf':
             text = self.text_extractor.extract_from_pdf(content)
@@ -97,12 +110,18 @@ class ScanService:
                 detail=f"Unsupported file type: .{file_extension}. Only PDF and DOCX are supported."
             )
         
+        if not text or not text.strip():
+            raise HTTPException(
+                status_code=400,
+                detail="Could not extract text from file. Please ensure the file contains readable text."
+            )
+        
         return text
     
     def _normalize_text(self, text: str) -> str:
         """Normalize text: lowercase, remove punctuation, collapse whitespace"""
-        import re
-        import string
+        if not text:
+            return ""
         
         # Lowercase
         text = text.lower()

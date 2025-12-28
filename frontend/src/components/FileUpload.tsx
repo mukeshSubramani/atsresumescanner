@@ -12,12 +12,14 @@ const FileUpload = ({ file, onFileChange }: FileUploadProps) => {
       const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
       if (!allowedTypes.includes(selectedFile.type) && !selectedFile.name.endsWith('.docx')) {
         alert('Please upload a PDF or DOCX file');
+        e.target.value = ''; // Reset input
         return;
       }
 
       // Validate file size (5MB)
       if (selectedFile.size > 5 * 1024 * 1024) {
         alert('File size must be less than 5MB');
+        e.target.value = ''; // Reset input
         return;
       }
     }
@@ -27,6 +29,11 @@ const FileUpload = ({ file, onFileChange }: FileUploadProps) => {
 
   const handleRemove = () => {
     onFileChange(null);
+    // Reset the file input
+    const fileInput = document.getElementById('file-upload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   };
 
   return (

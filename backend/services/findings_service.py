@@ -2,7 +2,6 @@
 Findings service - generates resume findings and suggestions
 """
 from typing import Dict, List, Any
-import re
 
 class FindingsService:
     """Service for generating resume findings and suggestions"""

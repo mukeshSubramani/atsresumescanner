@@ -1,7 +1,11 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { ScanResult } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+interface ErrorResponse {
+  detail: string;
+}
 
 export const scanResume = async (
   resumeFile: File | null,
@@ -28,9 +32,12 @@ export const scanResume = async (
     });
 
     return response.data;
-  } catch (error: any) {
-    if (error.response?.data?.detail) {
-      throw new Error(error.response.data.detail);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError<ErrorResponse>;
+      if (axiosError.response?.data?.detail) {
+        throw new Error(axiosError.response.data.detail);
+      }
     }
     throw new Error('Failed to scan resume. Please try again.');
   }

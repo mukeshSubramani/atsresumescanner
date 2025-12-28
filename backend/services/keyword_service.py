@@ -3,7 +3,6 @@ Keyword service - extracts and matches keywords
 """
 from typing import List, Tuple
 from collections import Counter
-import re
 
 class KeywordService:
     """Service for keyword extraction and matching"""
