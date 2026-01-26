@@ -56,7 +56,7 @@ class FindingsService:
         'sagemaker', 'databricks', 'snowflake', 'bigquery', 'redshift', 'athena',
         'hive', 'presto', 'trino', 'dbt', 'looker', 'tableau', 'powerbi', 'metabase',
         'xgboost', 'lightgbm', 'catboost', 'opencv', 'nltk', 'spacy', 'gensim',
-        'transformers', 'huggingface', 'langchain',
+        'transformers', 'huggingface', 'langchain', 'ml', 'ai',
         
         # Testing
         'junit', 'pytest', 'unittest', 'jest', 'mocha', 'chai', 'jasmine', 'karma',
@@ -88,7 +88,7 @@ class FindingsService:
         # APIs & Protocols
         'rest', 'restful', 'soap', 'grpc', 'websocket', 'graphql', 'oauth', 'oauth2',
         'jwt', 'saml', 'openid', 'cors', 'jsonrpc', 'xmlrpc', 'protobuf', 'thrift',
-        'avro', 'messagepack',
+        'avro', 'messagepack', 'api', 'sdk',
         
         # Architectures & Patterns
         'microservices', 'serverless', 'monolith', 'soa', 'event-driven', 'cqrs',
@@ -235,12 +235,17 @@ class FindingsService:
         """
         skills = []
         for keyword in missing_keywords:
-            # Skip if too short
-            if len(keyword) <= 2:
-                continue
-            
             # Normalize keyword for comparison
             keyword_lower = keyword.lower()
+            
+            # First check if it's in our technical skills database (handles short keywords like 'go', 'r', 'ci', 'cd')
+            if keyword_lower in self.TECHNICAL_SKILLS:
+                skills.append(keyword)
+                continue
+            
+            # Skip if too short (after checking database)
+            if len(keyword) <= 2:
+                continue
             
             # Skip company names/brands
             if keyword_lower in self.COMPANY_BRANDS:
@@ -248,11 +253,6 @@ class FindingsService:
             
             # Skip common adjectives and non-skill words
             if keyword_lower in self.ADJECTIVES_AND_VERBS:
-                continue
-            
-            # Include if it's in our technical skills database
-            if keyword_lower in self.TECHNICAL_SKILLS:
-                skills.append(keyword)
                 continue
             
             # Include if it matches technical patterns
@@ -303,18 +303,21 @@ class FindingsService:
             if keyword_lower.endswith(suffix) and len(keyword) > len(suffix):
                 return True
         
-        # Pattern 6: Technical prefixes
+        # Pattern 6: Technical prefixes (more flexible matching)
         technical_prefixes = {
-            'web', 'micro', 'cloud', 'data', 'dev', 'ops', 'auto',
+            'web', 'micro', 'cloud', 'data', 'dev', 'ops',
             'multi', 'cross', 'open', 'proto', 'meta', 'infra',
-            'cyber', 'tech', 'digital', 'smart', 'super',
+            'cyber', 'tech', 'digital',
         }
         for prefix in technical_prefixes:
             # Must have more characters after the prefix
             if keyword_lower.startswith(prefix) and len(keyword) > len(prefix) + 2:
-                # Check if what comes after looks technical (has dash or uppercase)
                 rest = keyword[len(prefix):]
+                # Check if what comes after looks technical (has dash, underscore, uppercase, or specific tech words)
                 if rest[0] in ['-', '_'] or rest[0].isupper():
+                    return True
+                # Also check for common technical compound words
+                if rest in ['server', 'service', 'services', 'native', 'stack', 'flow', 'shop']:
                     return True
         
         # Pattern 7: Contains combination of letters and numbers (lib2, v2ray, h264)
