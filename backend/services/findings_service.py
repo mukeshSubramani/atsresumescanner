@@ -172,7 +172,7 @@ class FindingsService:
         'upgrade', 'upgrading', 'upgraded', 'migrate', 'migrating', 'migrated',
         'deploy', 'deploying', 'deployed', 'manage', 'managing', 'managed',
         'coordinate', 'coordinating', 'coordinated', 'collaborate', 'collaborating',
-        'communicate', 'communicating', 'communicate', 'ensure', 'ensuring', 'ensured',
+        'communicate', 'communicating', 'ensure', 'ensuring', 'ensured',
         'provide', 'providing', 'provided', 'deliver', 'delivering', 'delivered',
         'achieve', 'achieving', 'achieved', 'complete', 'completing', 'completed',
         'perform', 'performing', 'performed', 'conduct', 'conducting', 'conducted',
@@ -310,21 +310,17 @@ class FindingsService:
             'cyber', 'tech', 'digital',
         }
         for prefix in technical_prefixes:
-            # Must have more characters after the prefix
+            # Must have more than 2 characters after the prefix to avoid matching common words
             if keyword_lower.startswith(prefix) and len(keyword) > len(prefix) + 2:
                 rest = keyword[len(prefix):]
-                # Check if what comes after looks technical (has dash, underscore, uppercase, or specific tech words)
-                if rest[0] in ['-', '_'] or rest[0].isupper():
-                    return True
-                # Also check for common technical compound words
-                if rest in ['server', 'service', 'services', 'native', 'stack', 'flow', 'shop']:
-                    return True
-        
-        # Pattern 7: Contains combination of letters and numbers (lib2, v2ray, h264)
-        has_letter = any(c.isalpha() for c in keyword)
-        has_digit = any(c.isdigit() for c in keyword)
-        if has_letter and has_digit:
-            return True
+                # Safety check: ensure rest is not empty
+                if len(rest) > 0:
+                    # Check if what comes after looks technical (has dash, underscore, uppercase, or specific tech words)
+                    if rest[0] in ['-', '_'] or rest[0].isupper():
+                        return True
+                    # Also check for common technical compound words
+                    if rest in ['server', 'service', 'services', 'native', 'stack', 'flow', 'shop']:
+                        return True
         
         return False
     
