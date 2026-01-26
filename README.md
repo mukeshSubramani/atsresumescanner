@@ -14,7 +14,7 @@ A simple, elegant web application for instant ATS (Applicant Tracking System) co
 ## Tech Stack
 
 ### Backend
-- Python 3.11
+- Python 3.14
 - FastAPI
 - Uvicorn
 - PyMuPDF (PDF text extraction)
@@ -30,7 +30,7 @@ A simple, elegant web application for instant ATS (Applicant Tracking System) co
 ## Prerequisites
 
 ### For Local Development
-- Python 3.11+
+- Python 3.14+
 - Node.js 20+
 - npm
 
